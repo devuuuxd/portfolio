@@ -1,9 +1,10 @@
 document.querySelectorAll("a").forEach((link) => {
   link.addEventListener("click", (e) => {
-    if (link.getAttribute("href")?.startsWith("#")) {
+    const href = link.getAttribute("href");
+    if (href?.startsWith("#") && href.length > 1) {
       e.preventDefault();
       document
-        .querySelector(link.getAttribute("href"))
+        .querySelector(href)
         ?.scrollIntoView({ behavior: "smooth" });
     }
   });
@@ -34,8 +35,43 @@ function animate() {
 animate();
 
 document.querySelectorAll("a, button, .card").forEach((el) => {
-  el.addEventListener("mouseenter", () => cursor.classList.add("hover"));
-  el.addEventListener("mouseleave", () => cursor.classList.remove("hover"));
+  el.addEventListener("mouseenter", () => cursor?.classList.add("hover"));
+  el.addEventListener("mouseleave", () => cursor?.classList.remove("hover"));
 });
+
+// Mobile navigation menu toggle
+const nav = document.querySelector("nav");
+const menuToggle = document.querySelector(".menu-toggle");
+const navLinks = document.querySelector("nav ul");
+
+if (menuToggle && nav) {
+  menuToggle.addEventListener("click", () => {
+    const isExpanded = menuToggle.getAttribute("aria-expanded") === "true";
+    menuToggle.setAttribute("aria-expanded", String(!isExpanded));
+    nav.classList.toggle("menu-open");
+  });
+
+  navLinks?.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => {
+      nav.classList.remove("menu-open");
+      menuToggle.setAttribute("aria-expanded", "false");
+    });
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!nav.contains(e.target)) {
+      nav.classList.remove("menu-open");
+      menuToggle.setAttribute("aria-expanded", "false");
+    }
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && nav.classList.contains("menu-open")) {
+      nav.classList.remove("menu-open");
+      menuToggle.setAttribute("aria-expanded", "false");
+      menuToggle.focus();
+    }
+  });
+}
 
 document.addEventListener("contextmenu", (e) => e.preventDefault());
