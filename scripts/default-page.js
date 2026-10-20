@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   const body = document.body;
+  const html = document.documentElement;
   const cornerImg = document.querySelector(".corner-art");
   if (!cornerImg) return;
 
@@ -7,6 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (isDark) {
     body.classList.add("invert");
+    html.classList.add("invert");
     cornerImg.src = "./photos/guts.png";
     cornerImg.style.width = "250px";
     cornerImg.style.right = "-40px";

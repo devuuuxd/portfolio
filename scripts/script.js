@@ -39,7 +39,6 @@ document.querySelectorAll("a, button, .card").forEach((el) => {
   el.addEventListener("mouseleave", () => cursor?.classList.remove("hover"));
 });
 
-// Mobile navigation menu toggle
 const nav = document.querySelector("nav");
 const menuToggle = document.querySelector(".menu-toggle");
 const navLinks = document.querySelector("nav ul");
